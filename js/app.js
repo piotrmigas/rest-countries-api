@@ -44,6 +44,8 @@ function displayCountries(countries) {
             </div>
         `;
 
+    // Modal
+
     countryEl.addEventListener("click", () => {
       showCountryDetails(country);
       modal.classList.add("is-visible");
@@ -53,8 +55,6 @@ function displayCountries(countries) {
     countriesEl.appendChild(countryEl);
   });
 }
-
-// Modal
 
 function showCountryDetails(country) {
   const modalBody = modal.querySelector(".modal-body");
