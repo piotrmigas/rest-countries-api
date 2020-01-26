@@ -31,7 +31,7 @@ function displayCountries(countries) {
                 <h3 class="country-name">${country.name}</h3>
                 <p>
                     <strong>Population:</strong>
-                    ${country.population}
+                    ${country.population.toLocaleString("en-US")}
                 </p>
                 <p class="country-region">
                     <strong>Region:</strong>
@@ -70,7 +70,7 @@ function showCountryDetails(country) {
         </p>
         <p>
             <strong>Population:</strong>
-            ${country.population}
+            ${country.population.toLocaleString("en-US")}
         </p>
         <p>
             <strong>Region:</strong>
@@ -90,11 +90,14 @@ function showCountryDetails(country) {
         </p>
         <p>
             <strong>Currencies:</strong>
-            ${country.currencies.map(currency => currency.code)}
+            ${country.currencies
+              .filter(c => c.name)
+              .map(c => `${c.name} (${c.code})`)
+              .join(", ")}
         </p>
         <p>
             <strong>Languages:</strong>
-            ${country.languages.map(language => language.name)}
+            ${country.languages.map(language => language.name).join(", ")}
         </p>
     `;
 }
