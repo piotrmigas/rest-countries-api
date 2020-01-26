@@ -1,7 +1,3 @@
-window.addEventListener("load", function() {
-  document.body.classList.add("all-loaded");
-});
-
 const countriesEl = document.getElementById("countries");
 const toggleBtn = document.getElementById("toggle");
 const filterBtn = document.getElementById("filter");
