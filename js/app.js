@@ -1,3 +1,7 @@
+window.addEventListener("load", function() {
+  document.body.classList.add("all-loaded");
+});
+
 const countriesEl = document.getElementById("countries");
 const toggleBtn = document.getElementById("toggle");
 const filterBtn = document.getElementById("filter");
@@ -67,6 +71,10 @@ function showCountryDetails(country) {
         <p>
             <strong>Native Name:</strong>
             ${country.nativeName}
+        </p>
+        <p>
+            <strong>Dialing Code:</strong>
+            +${country.callingCodes[0]}
         </p>
         <p>
             <strong>Population:</strong>
