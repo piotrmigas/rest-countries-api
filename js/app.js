@@ -6,7 +6,6 @@ const searchEl = document.getElementById("search");
 const modal = document.getElementById("modal");
 const overlay = document.getElementById("overlay");
 const closeBtn = document.getElementById("close");
-const spinner = document.querySelector(".spinner");
 
 getCountries();
 
@@ -100,10 +99,62 @@ function showCountryDetails(country) {
               .join(", ")}
         </p>
         <p>
+            <strong>Currency converter:</strong><br>
+            <span id="rate"></span> <button id="exchange">
+            <i class="fas fa-exchange-alt"></i>
+          </button><br>
+            <select id="fromNativeCode">
+          <option value=${country.currencies[0].code}>${country.currencies[0].code}</option>
+          <option value="PLN">PLN</option>
+        </select>
+             <input type="number" id="fromNativeAmount" placeholder="0" value="1" >
+           <select id="toPlnCode">
+          <option value="PLN">PLN</option>
+          <option value=${country.currencies[0].code}>${country.currencies[0].code}</option>
+        </select>
+        <input type="number" id="toPlnAmount" placeholder="0" /> 
+        </p>
+        <p>
             <strong>Languages:</strong>
             ${country.languages.map(language => language.name).join(", ")}
         </p>
     `;
+
+  // Currency converter
+
+  const fromNativeCode = document.getElementById("fromNativeCode");
+  const fromNativeAmount = document.getElementById("fromNativeAmount");
+  const toPlnCode = document.getElementById("toPlnCode");
+  const toPlnAmount = document.getElementById("toPlnAmount");
+  const exchange = document.getElementById("exchange");
+
+  fromNativeCode.addEventListener("change", calculate);
+  fromNativeAmount.addEventListener("input", calculate);
+  toPlnCode.addEventListener("change", calculate);
+  toPlnAmount.addEventListener("input", calculate);
+
+  exchange.addEventListener("click", () => {
+    const temp = fromNativeCode.value;
+    fromNativeCode.value = toPlnCode.value;
+    toPlnCode.value = temp;
+    calculate();
+  });
+
+  function calculate() {
+    const displayRate = document.getElementById("rate");
+    const from_currency = fromNativeCode.value;
+    const to_currency = toPlnCode.value;
+
+    fetch(`https://api.exchangerate-api.com/v4/latest/${from_currency}`)
+      .then(res => res.json())
+      .then(res => {
+        const rate = res.rates[to_currency];
+        displayRate.innerText = `1 ${from_currency} = ${rate} ${to_currency}`;
+        toPlnAmount.value = (fromNativeAmount.value * rate).toFixed(2);
+      });
+  }
+
+  calculate();
 }
 
 // Theme switch

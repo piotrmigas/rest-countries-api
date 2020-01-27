@@ -210,6 +210,10 @@ body.dark .btn-toggle .far {
   max-width: 300px;
 }
 
+input[type="number"] {
+  width: 55px;
+}
+
 .btn-close {
   background-color: var(--background-el);
   color: inherit;
